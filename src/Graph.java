@@ -1,38 +1,21 @@
-// A Java program to print topological sorting of a graph
-// using indegrees
 import java.util.*;
 
-//Class to represent a graph
 class Graph
 {
-    int V;// No. of vertices
-
-    //An Array of List which contains
-    //references to the Adjacency List of
-    //each vertex
+    int V;
     List <Integer> adj[];
-    public Graph(int V)// Constructor
+
+    public void IntializeAdjList(ArrayList<ArrayList<Integer>> adjList)
     {
-        this.V = V;
-        adj = new ArrayList[V];
-        for(int i = 0; i < V; i++)
-            adj[i]=new ArrayList<Integer>();
+        adj = new ArrayList[adjList.size()];
+        V= adjList.size();
+        for(int i = 0; i < adjList.size(); i++)
+            adj[i]=adjList.get(i);
     }
 
-    // function to add an edge to graph
-    public void addEdge(int u,int v)
+    public Vector<Integer> topologicalSort()
     {
-        adj[u].add(v);
-    }
-    // prints a Topological Sort of the complete graph
-    public void topologicalSort()
-    {
-        // Create a array to store indegrees of all
-        // vertices. Initialize all indegrees as 0.
         int indegree[] = new int[V];
-
-        // Traverse adjacency lists to fill indegrees of
-        // vertices. This step takes O(V+E) time
         for(int i = 0; i < V; i++)
         {
             ArrayList<Integer> temp = (ArrayList<Integer>) adj[i];
@@ -41,35 +24,20 @@ class Graph
                 indegree[node]++;
             }
         }
-
-        // Create a queue and enqueue all vertices with
-        // indegree 0
         Queue<Integer> q = new LinkedList<Integer>();
         for(int i = 0;i < V; i++)
         {
             if(indegree[i]==0)
                 q.add(i);
         }
-
-        // Initialize count of visited vertices
         int cnt = 0;
-
-        // Create a vector to store result (A topological
-        // ordering of the vertices)
         Vector <Integer> topOrder=new Vector<Integer>();
         while(!q.isEmpty())
         {
-            // Extract front of queue (or perform dequeue)
-            // and add it to topological order
             int u=q.poll();
             topOrder.add(u);
-
-            // Iterate through all its neighbouring nodes
-            // of dequeued node u and decrease their in-degree
-            // by 1
             for(int node : adj[u])
             {
-                // If in-degree becomes zero, add it to queue
                 if(--indegree[node] == 0)
                     q.add(node);
             }
@@ -80,7 +48,7 @@ class Graph
         if(cnt != V)
         {
             System.out.println("There exists a cycle in the graph");
-            return ;
+            return new Vector<>();
         }
 
         // Print topological order
@@ -88,21 +56,10 @@ class Graph
         {
             System.out.print(i+" ");
         }
+        System.out.println();
+        return topOrder;
     }
-    public static void main(String args[])
-    {
-        // Create a graph given in the above diagram
-        Graph g=new Graph(6);
-        g.addEdge(5, 2);
-        g.addEdge(5, 0);
-        g.addEdge(4, 0);
-        g.addEdge(4, 1);
-        g.addEdge(2, 3);
-        g.addEdge(3, 1);
-        System.out.println("Following is a Topological Sort");
-        g.topologicalSort();
 
-    }
 }
 
 

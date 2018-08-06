@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Vector;
 
 public class Main {
 
@@ -29,8 +30,14 @@ public class Main {
         }
 
         Matrix matrix = new Matrix();
-        ArrayList< ArrayList<Integer>> newMatrix= new ArrayList<>();
-        newMatrix = matrix.getmatrix(rankMatrix);
-        matrix.getAdjList(newMatrix);
+        ArrayList< ArrayList<Integer>> newMatrix= matrix.getmatrix(rankMatrix);
+        ArrayList< ArrayList<Integer>> adjmatrix= matrix.getAdjList(newMatrix);
+        Graph graph= new Graph();
+        graph.IntializeAdjList(adjmatrix);
+        Vector<Integer> topoOrder = graph.topologicalSort();
+        for(int i : topoOrder)
+        {
+            System.out.print(studentName.get(i) +" ");
+        }
     }
 }
