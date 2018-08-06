@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
+
     public static void main(String[] args){
         ArrayList<String> studentName= new ArrayList<>();
         ArrayList< ArrayList<Integer>> rankMatrix= new ArrayList<>();
@@ -26,5 +27,10 @@ public class Main {
             }
             System.out.println();
         }
+
+        Matrix matrix = new Matrix();
+        ArrayList< ArrayList<Integer>> newMatrix= new ArrayList<>();
+        newMatrix = matrix.getmatrix(rankMatrix);
+        matrix.getAdjList(newMatrix);
     }
 }
